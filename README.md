@@ -1,7 +1,7 @@
 # Serving the project "idol"  
 Some one-key tools for saving time
 
-### Get official protraits  
+## 1.Get official protraits  
 ***keyakizaka46⊿***  
 `python get-keyaki-members-official-portraits.py`  
 
@@ -10,7 +10,7 @@ Some one-key tools for saving time
 
 Coding with python 2.7, standard library only, no additional module required.
 
-### Get member's blog list 
+## 2.Get member's blog list 
 ***nogizaka46⊿***  
 `python get-nogi-members-all-blog-list.py`  
 
@@ -19,7 +19,7 @@ You can also set the specific member, just change the dict's key.
 
 Coding with python 2.7, standard library only, no additional module required.  
 
-### Download blog page
+## 3.Download blog page
 ***nogizaka46⊿***  
 `python3 force-get-blog-raw-page.py`  
 Relying on the url list gotten by prev script.  
@@ -28,7 +28,7 @@ Storing like official website's php url definition.
 Coding with python 3.4, upwards compatible, required module "asyncio", "aiohttp".  
 **Using async to make requests, care with your ip address because of huge concurrency**
 
-### Sample  
+## 4.Sample  
 hashimoto nanami's "all" blog list are uploaded  
 hashimoto nanami's "completed" blog pages are uploaded (will be closed on 31st March, 2017)   
 the official website(smph)'s unknown bug causing one blog lost.  
