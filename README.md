@@ -1,7 +1,7 @@
 # Serving the project "idol"  
 Some one-key tools for saving time
 
-## 1.Get official protraits  
+## 1.Get official portraits  
 ***keyakizaka46⊿***  
 `python get-keyaki-members-official-portraits.py`  
 
