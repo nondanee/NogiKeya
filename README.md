@@ -16,7 +16,7 @@ Coding with python 2.7, standard library only, no additional module required.
 
 You can set the time limit, default is getting from the earlist blog.  
 You can also set the specific member, just change the dict's key.  
-List is stored with json format like the sample ["nanami.json"](https://github.com/nondanee/NogiKeya/blob/master/nanami.json) in this repo.  
+List is stored with json format like the sample [nanami.json](https://github.com/nondanee/NogiKeya/blob/master/nanami.json) in this repo.  
 
 Coding with python 2.7, standard library only, no additional module required.  
 
@@ -25,9 +25,9 @@ Coding with python 2.7, standard library only, no additional module required.
 `python3 force-get-blog-raw-page.py`  
 Relying on the blog list gotten by prev script.  
 Storing like official website's php url definition,  
-The directory named ["hashimoto.nanami"](https://github.com/nondanee/NogiKeya/tree/master/nanami.hashimoto) in this repo is a sample.  
+The directory named [hashimoto.nanami/](https://github.com/nondanee/NogiKeya/tree/master/nanami.hashimoto) in this repo is a sample.  
 
-*BTW: I use these offline pages (after processing) to build a small blog-storing site by Github Pages in the other repo named ["onemoretime"](https://github.com/nondanee/onemoretime).*   
+*BTW: I use these offline pages (after processing) to build a small blog-storing site by Github Pages in the other repo named [nondanee / onemoretime](https://github.com/nondanee/onemoretime).*   
 
 Coding with python 3.4, upwards compatible, required "asyncio" and "aiohttp".  
 **Using async to make requests, care with your ip address because of concurrent access**
