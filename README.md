@@ -16,20 +16,18 @@ Coding with python 2.7, standard library only, no additional module required.
 
 You can set the time limit, default is getting from the earlist blog.  
 You can also set the specific member, just change the dict's key.  
+List is stored with json format like the sample ["nanami.json"](https://github.com/nondanee/NogiKeya/blob/master/nanami.json) in this repo.  
 
 Coding with python 2.7, standard library only, no additional module required.  
 
-## 3.Download blog page
+## 3.Download blog page (async)
 ***nogizaka46⊿***  
 `python3 force-get-blog-raw-page.py`  
-Relying on the url list gotten by prev script.  
-Storing like official website's php url definition.  
+Relying on the blog list gotten by prev script.  
+Storing like official website's php url definition,  
+The directory named ["hashimoto.nanami"](https://github.com/nondanee/NogiKeya/tree/master/nanami.hashimoto) in this repo is a sample.  
 
-Coding with python 3.4, upwards compatible, required module "asyncio", "aiohttp".  
-**Using async to make requests, care with your ip address because of huge concurrency**
+*BTW: I use these offline pages (after processing) to build a small blog-storing site by Github Pages in the other repo named ["onemoretime"](https://github.com/nondanee/onemoretime).*   
 
-## 4.Sample  
-hashimoto nanami's "all" blog list are uploaded  
-hashimoto nanami's "completed" blog pages are uploaded (will be closed on 31st March, 2017)   
-the official website(smph)'s unknown bug causing one blog lost.  
-Recommand idolx46.top/nanami to get a better reading experience :)     
+Coding with python 3.4, upwards compatible, required "asyncio" and "aiohttp".  
+**Using async to make requests, care with your ip address because of concurrent access**
