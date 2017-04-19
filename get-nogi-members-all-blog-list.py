@@ -16,7 +16,7 @@ import json
 import datetime
 
 regex = r'''<div class="unit">[\s\S]+?<span class="yearmonth">([\s\S]+?)</span>[\s\S]+?<span class="dd1">([\s\S]+?)</span>[\s\S]+?<span class="dd2">([\s\S]+?)</span>[\s\S]+?<span class="author">([\s\S]+?)</span>[\s\S]+?<a href="([^"]+?)"[^>]+?>([\s\S]+?)</a>[\s\S]+?<div class="entrybodyin">\s*([\s\S]+?)\s*</div>[\s\S]+?<div class="kijifoot">([\s\S]+?)</div>'''
-headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"}
+headers = {"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 Instagram 10.10.0 (iPhone5,2; iOS 10_2_1; ja_JP; ja-JP; scale=2.00; gamut=normal; 640x1136)"}
 
 urlnamedict = {
     "秋元真夏":"manatsu.akimoto",
@@ -33,7 +33,7 @@ urlnamedict = {
     "齋藤飛鳥":"asuka.saito",
     "斎藤ちはる":"chiharu.saito",
     "斉藤優里":"yuuri.saito",
-    "相楽伊織":"riori.sagara",
+    "相楽伊織":"iori.sagara",
     "桜井玲香":"reika.sakurai",
     "佐々木琴子":"kotoko.sasaki",
     "白石麻衣":"mai.shiraishi",
@@ -45,7 +45,7 @@ urlnamedict = {
     "中元日芽香":"himeka.nakamoto",
     "西野七瀬":"nanase.nishino",
     "能條愛未":"ami.noujo",
-    "橋本奈々未":"nanami.hashimoto",
+    # "橋本奈々未":"nanami.hashimoto",
     "樋口日奈":"hina.higuchi",
     "星野みなみ":"minami.hoshino",
     "堀未央奈":"miona.hori",
@@ -59,9 +59,9 @@ urlnamedict = {
     "スタッフブログ":"staff"
 }
 
-member = urlnamedict["橋本奈々未"]#you can change this
+member = urlnamedict["桜井玲香"]#you can change this
 page = 1
-month = 11
+month = 10
 year = 2011
 
 content_first=[]
@@ -70,7 +70,7 @@ rawlist=[]
 thisyear = datetime.datetime.now().year
 thismonth = datetime.datetime.now().month
 
-while year!=2017 or month != thismonth:
+while year!=thisyear or month != thismonth + 1:
     
     if month == 13:
         month = 1      
