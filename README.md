@@ -32,7 +32,7 @@ The directory named [hashimoto.nanami/](https://github.com/nondanee/NogiKeya/tre
 Coding with python 3.4, upwards compatible, required "asyncio" and "aiohttp".  
 **Using async to make requests, care with your ip address because of concurrent access**
 
-## 3.Get all members' info (async)
+## 4.Get all members' info (async)
 ***nogizaka46⊿***  
 `python3 get-nogi-members-info.py`  
 Get nogizaka members' introduction page data and generate a json file.  
