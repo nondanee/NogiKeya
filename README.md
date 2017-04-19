@@ -20,7 +20,7 @@ List is stored with json format like the sample [nanami.json](https://github.com
 
 Coding with python 2.7, standard library only, no additional module required.  
 
-## 3.Download blog page (async)
+## 3.Download blog pages (async)
 ***nogizaka46⊿***  
 `python3 force-get-blog-raw-page.py`  
 Relying on the blog list gotten by prev script.  
