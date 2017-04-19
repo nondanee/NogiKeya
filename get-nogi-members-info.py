@@ -85,7 +85,7 @@ def pageget(url):
 
                 valid = valid[0]
 
-                avatar = re.sub(r'\?\w+$','',valid[0])
+                portrait = re.sub(r'\?\w+$','',valid[0])
                 name = re.sub(r' ','',valid[1])
                 kana = valid[2][1:-1]
                 birthdate = valid[3]
@@ -106,7 +106,7 @@ def pageget(url):
                 detail["constellation"] = constellation
                 detail["height"] = height
                 detail["status"] = status
-                detail["avatar"] = avatar
+                detail["portrait"] = portrait
                 detail["link"] = url
                     
                 getAll.append(detail)
