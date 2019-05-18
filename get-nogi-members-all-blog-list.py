@@ -4,113 +4,58 @@ Created on Mon Jan 16 14:51:04 2017
 
 @author: Nzix
 """
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
-import re
-import collections
-import urllib2
-import operator
+from datetime import datetime
 import json
-import datetime
+import os
+import re
+import random
+import time
+from tqdm import tqdm
+from typing import Generator
+import requests
 
-regex = r'''<div class="unit">[\s\S]+?<span class="yearmonth">([\s\S]+?)</span>[\s\S]+?<span class="dd1">([\s\S]+?)</span>[\s\S]+?<span class="dd2">([\s\S]+?)</span>[\s\S]+?<span class="author">([\s\S]+?)</span>[\s\S]+?<a href="([^"]+?)"[^>]+?>([\s\S]+?)</a>[\s\S]+?<div class="entrybodyin">\s*([\s\S]+?)\s*</div>[\s\S]+?<div class="kijifoot">([\s\S]+?)</div>'''
-headers = {"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 Instagram 10.10.0 (iPhone5,2; iOS 10_2_1; ja_JP; ja-JP; scale=2.00; gamut=normal; 640x1136)"}
 
-urlnamedict = {
-    "秋元真夏":"manatsu.akimoto",
-    "生田絵梨花":"erika.ikuta",
-    "生駒里奈":"rina.ikoma",
-    "伊藤かりん":"karin.itou",
-    "伊藤純奈":"junna.itou",
-    "伊藤万理華":"marika.ito",
-    "井上小百合":"sayuri.inoue",
-    "衛藤美彩":"misa.eto",
-    "川後陽菜":"hina.kawago",
-    "川村真洋":"mahiro.kawamura",
-    "北野日奈子":"hinako.kitano",
-    "齋藤飛鳥":"asuka.saito",
-    "斎藤ちはる":"chiharu.saito",
-    "斉藤優里":"yuuri.saito",
-    "相楽伊織":"iori.sagara",
-    "桜井玲香":"reika.sakurai",
-    "佐々木琴子":"kotoko.sasaki",
-    "白石麻衣":"mai.shiraishi",
-    "新内眞衣":"mai.shinuchi",
-    "鈴木絢音":"ayane.suzuki",
-    "高山一実":"kazumi.takayama",
-    "寺田蘭世":"ranze.terada",
-    "中田花奈":"kana.nakada",
-    "中元日芽香":"himeka.nakamoto",
-    "西野七瀬":"nanase.nishino",
-    "能條愛未":"ami.noujo",
-    # "橋本奈々未":"nanami.hashimoto",
-    "樋口日奈":"hina.higuchi",
-    "星野みなみ":"minami.hoshino",
-    "堀未央奈":"miona.hori",
-    "松村沙友理":"sayuri.matsumura",
-    "山崎怜奈":"rena.yamazaki",
-    "若月佑美":"yumi.wakatsuki",
-    "渡辺みり愛":"miria.watanabe",
-    "和田まあや":"maaya.wada",
-    "３期生":"third",
-    "研究生":"kenkyusei",
-    "スタッフブログ":"staff"
-}
+from members import NOGIZAKA
 
-member = urlnamedict["桜井玲香"]#you can change this
-page = 1
-month = 10
-year = 2011
+REGEX = r'''<div class="unit">[\s\S]+?<span class="yearmonth">([\s\S]+?)</span>[\s\S]+?<span class="dd1">([\s\S]+?)</span>[\s\S]+?<span class="dd2">([\s\S]+?)</span>[\s\S]+?<span class="author">([\s\S]+?)</span>[\s\S]+?<a href="([^"]+?)"[^>]+?>([\s\S]+?)</a>[\s\S]+?<div class="entrybodyin">\s*([\s\S]+?)\s*</div>[\s\S]+?<div class="kijifoot">([\s\S]+?)</div>'''
+HEADERS = {"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Mobile/14D27 Instagram 10.10.0 (iPhone5,2; iOS 10_2_1; ja_JP; ja-JP; scale=2.00; gamut=normal; 640x1136)"}
+BLOG_URL = 'http://blog.nogizaka46.com/{member}/smph/?p={page_no}&d={year}{month}'
+OUTPUT_FOLDER = os.path.abspath('./tmp/nogi/blog/')
+os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-content_first=[]
-rawlist=[]
 
-thisyear = datetime.datetime.now().year
-thismonth = datetime.datetime.now().month
+def get_blog_post(member: str) -> Generator[dict, None, None]:
+    page = 1
+    year, month = 2011, 10
+    current_date = datetime.now()
 
-while year!=thisyear or month != thismonth + 1:
-    
-    if month == 13:
-        month = 1      
-        year = year + 1
+    while year != current_date.year or month != current_date.month + 1:
+        if month > 12:
+            month = 1
+            year += 1
 
-    url = "http://blog.nogizaka46.com/%s/smph/?p=%s&d=%s"%(member, str(page), str(year)+str(month).zfill(2))
-    
-    request = urllib2.Request(url=url, headers=headers)
-    response = urllib2.urlopen(request) 
-    if response.geturl() != url:#it might be redirected
-        month = month + 1
-        page = 1
-        continue    
-    data = response.read().decode("utf-8")
-    content=re.findall(regex,data)
+        url = BLOG_URL.format(member=member[1], page_no=page, year=year, month=str(month).zfill(2))
+        contents = re.findall(REGEX, requests.get(url, headers=HEADERS).text)
 
-    if page == 1:
-        content_first = content
-    elif content_first == content:
-        month = month + 1
-        page = 1
-        continue
-    
-    print str(year)+str(month).zfill(2)+" page"+str(page)
-    for i in xrange(len(content)-1,-1,-1):
-        oneblog = collections.OrderedDict()    
-        oneblog["post"] = content[i][7][0:16]
-        oneblog["author"] = content[i][3]
-        oneblog["title"] = content[i][5]
-        oneblog["summary"] = content[i][6]
-        oneblog["url"] = content[i][4]
-        rawlist.append(oneblog)
-        
-    page = page + 1
+        if page == 1:
+            content_first = contents
+        elif content_first == contents:
+            month += 1
+            page = 1
+            continue
 
-sortedlist = sorted(rawlist, key = operator.itemgetter('post') ,reverse=True)
+        for post in contents:
+            yield dict(title=post[6], created_at='/'.join([post[0], post[1]]), author=post[3], url=post[4])
+        page += 1
 
-print "total " + len(sortedlist)
 
-name = member.split(".")[0]
-f = open("d:\\" + name + ".json", 'w')
-f.write(json.dumps(sortedlist,ensure_ascii=False,sort_keys=False,indent=1))
-f.close()
+if __name__ == "__main__":
+    for name, member in NOGIZAKA.items():
+        with open(os.path.join(OUTPUT_FOLDER, '{}.json'.format(member[1].replace('.', '_'))), 'w') as writer:
+            for blog in tqdm(get_blog_post(member), postfix=name):
+                writer.write(json.dumps(blog, ensure_ascii=False, sort_keys=False))
+                writer.write('\n')
+        sleep_length = random.choice(range(1, 11))
+        print('sleep: %s' % sleep_length)
+        time.sleep(sleep_length)
