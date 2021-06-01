@@ -3,5 +3,5 @@ chardet==3.0.4
 idna==2.8
 requests==2.22.0
 tqdm==4.32.1
-urllib3==1.25.2
+urllib3==1.26.5
 wget==3.2
